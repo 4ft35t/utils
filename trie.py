@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 # weizx@2017-04-25 15:07:32
 # vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
@@ -18,15 +18,15 @@ class Trie(object):
 
     def search_tree(self, item_list):
         root = self.tree
+        ret = []
         for i in item_list:
+            ret.append(i)
             if root.get(i) == {}: # leaf
-                return True
-            if root.get(i):
-                if i == item_list[-1]:
-                    return True
+                return ret
+            elif root.get(i):
                 root = root[i]
 
-        return False
+        return []
 
 
 class DomainSearch(Trie):
@@ -36,7 +36,7 @@ class DomainSearch(Trie):
             self.insert_tree(self.reverse_domain(i))
 
     def search_domain(self, domain):
-        return self.search_tree(self.reverse_domain(domain))
+        return '.'.join(self.search_tree(self.reverse_domain(domain))[::-1])
 
     def reverse_domain(self, domain):
         return domain.split('.')[::-1]
@@ -45,6 +45,8 @@ if __name__ == '__main__':
     lst = ['g.cn', 't.co', 't.cn', 'pku.edu.cn']
     dmt = DomainSearch()
     dmt.build_domain_tree(lst)
-    print dmt.tree
+    print(dmt.tree)
     assert dmt.search_domain('g.cn')
-    assert dmt.search_domain('www.g.cn')
+    print(dmt.search_domain('www.g.cn'))
+    assert not dmt.search_domain('www.a.edu.cn')
+    assert not dmt.search_domain('edu.cn')

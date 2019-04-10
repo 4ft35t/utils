@@ -21,10 +21,12 @@ class Trie(object):
         ret = []
         for i in item_list:
             ret.append(i)
-            if root.get(i) == {}: # leaf
+            t = root.get(i)
+            if not t:
+                return []
+            elif t == {}: # leaf
                 return ret
-            elif root.get(i):
-                root = root[i]
+            root = root[i]
 
         return []
 

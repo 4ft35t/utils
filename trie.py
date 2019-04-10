@@ -22,7 +22,7 @@ class Trie(object):
         for i in item_list:
             ret.append(i)
             t = root.get(i)
-            if not t:
+            if t == None:
                 return []
             elif t == {}: # leaf
                 return ret

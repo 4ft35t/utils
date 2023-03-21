@@ -1,4 +1,4 @@
 utils
 =====
 
-Some useful python scripts
+Some useful scripts

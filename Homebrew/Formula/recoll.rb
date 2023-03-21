@@ -1,36 +1,29 @@
 require 'formula'
-
 # Notes:
-# - This formula is missing python-libxml2 and python-libxslt deps
-#   which recoll needs for indexing many formats (e.g. libreoffice,
-#   openxml). Homebrew does not include these packages.
-#   So the user needs to install them with pip because I don't understand how
-#   the "Resource" homebrew thing works.
-# Still a bit of work then, but I did not investigate, because the macports
-# version was an easier target.
+# - This formula is missing recoll gui, only bulid command line tool
 
+#  copy from https://framagit.org/medoc92/recoll/-/blob/master/packaging/homebrew/recoll.rb
 class Recoll < Formula
   desc "Desktop search tool"
   homepage 'http://www.recoll.org'
-  url 'https://www.lesbonscomptes.com/recoll/recoll-1.31.2.tar.gz'
-  sha256 "d3edb28fa76f2bb15e6555f82ef74e9151a2271535d3fdeb5f34012b1c2c3c54"
+  url 'https://www.lesbonscomptes.com/recoll/recoll-1.34.6.tar.gz'
+  sha256 "e39587d12370df92e4ac951429d0bb805662d7417d4dbcd41e92389b165e9fb8"
 
   depends_on "xapian"
-  depends_on "qt@5"
+  depends_on "qt@6"
   depends_on "antiword"
   depends_on "poppler"
   depends_on "unrtf"
+  depends_on "aspell"
+  depends_on "exiftool"
+  depends_on "chmlib"
 
   def install
-    # homebrew has webengine, not webkit and we're not ready for this yet
-    system "./configure", "--disable-python-module",
-                          "--disable-webkit",
-                          "--disable-python-chm",
-                          "--enable-recollq",
-                          "QMAKE=/usr/local/opt/qt@5/bin/qmake",
+    system "./configure", "--enable-recollq",
+                          "--disable-qtgui",
                           "--prefix=#{prefix}"
     system "make", "install"
-    bin.install "#{buildpath}/qtgui/recoll.app/Contents/MacOS/recoll"
+    # bin.install "#{buildpath}/qtgui/recoll.app/Contents/MacOS/recoll"
   end
 
   test do

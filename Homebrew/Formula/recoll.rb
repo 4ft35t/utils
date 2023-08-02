@@ -6,11 +6,11 @@ require 'formula'
 class Recoll < Formula
   desc "Desktop search tool"
   homepage 'http://www.recoll.org'
-  url 'https://www.lesbonscomptes.com/recoll/recoll-1.34.6.tar.gz'
-  sha256 "e39587d12370df92e4ac951429d0bb805662d7417d4dbcd41e92389b165e9fb8"
+  url 'https://www.lesbonscomptes.com/recoll/recoll-1.35.0.tar.gz'
+  sha256 "e66b0478709dae93d2d1530256885836595a14925d5d19fc95a63a04d06df941"
 
   depends_on "xapian"
-  depends_on "qt@6"
+  # depends_on "qt@6" # disable for no gui
   depends_on "antiword"
   depends_on "poppler"
   depends_on "unrtf"
